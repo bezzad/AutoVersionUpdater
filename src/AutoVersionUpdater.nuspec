@@ -4,7 +4,7 @@
     <id>AutoVersionUpdater</id>
     <title>.NET Applications Auto Version Updater</title>
     <iconUrl>
-      https://raw.githubusercontent.com/Behzadkhosravifar/AutoVersionUpdater/master/src/VersionUpdater.png
+      https://github.com/Behzadkhosravifar/AutoVersionUpdater/raw/master/src/VersionUpdater.png
     </iconUrl>
     <version>1.0.0</version>
     <description>
