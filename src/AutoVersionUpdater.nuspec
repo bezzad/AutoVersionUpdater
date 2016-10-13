@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<package >
+  <metadata minClientVersion="2.8">
+    <id>AutoVersionUpdater</id>
+    <title>.NET Applications Auto Version Updater</title>
+    <iconUrl>
+      https://raw.githubusercontent.com/Behzadkhosravifar/AutoVersionUpdater/master/src/VersionUpdater.png
+    </iconUrl>
+    <version>1.0.0</version>
+    <description>
+      AutoVersionUpdater is a .NET text templete for managing assembly versions.
+      Usually any .Net project have AssemblyInfo.cs in "Properties" directory. So, this T4 run on every build of visual studio and increase version of this file.
+
+      for more informations: https://github.com/Behzadkhosravifar/AutoVersionUpdater
+    </description>
+    <summary>
+      This is a C#.Net project's for auto increase assembly version of your .Net applications on every build.
+    </summary>
+    <authors>Behzad Khosravifar</authors>
+    <owners>Behzad Khosravifar</owners>
+    <licenseUrl>http://www.gnu.org/licenses/gpl.txt</licenseUrl>
+    <projectUrl>http://xomorod.com</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <releaseNotes>
+
+      * First initial.
+
+    </releaseNotes>
+    <copyright>Copyright (C) 2016 Behzad Khosravifar</copyright>
+    <tags>
+      Auto Assembly Version Updater .NET AssemblyInfo increaser on build
+    </tags>
+    <developmentDependency>true</developmentDependency>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System" />
+    </frameworkAssemblies>
+    <dependencies>
+      <group targetFramework="net45">
+        <dependency id="Clarius.TransformOnBuild-unofficial" version="1.20" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="AutoVersionUpdater.tt" target="content\Properties\AutoVersionUpdater.tt" />
+    <file src="readme.txt" target="" />
+  </files>
+</package>
