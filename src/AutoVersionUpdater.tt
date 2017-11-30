@@ -21,36 +21,43 @@
 //------------------------------------------------------------------------------
 
 <#
-    string path =  Host.ResolvePath("..");
-		
-	var AssemblyFilePath = Path.Combine(path, "Properties\\AssemblyInfo.cs");	
+    string path =  Host.ResolvePath("..");		
+	 string AssemblyFilePath = Path.Combine(path, "Properties\\AssemblyInfo.cs");	
 
 	//========================================== Assembly File ==================================================
-    string newVersion = null;
+   string newVersion = string.Empty;
 	if(File.Exists(AssemblyFilePath)) 
 	{
-		var AssemblyFileData = File.ReadAllText(AssemblyFilePath);
-		
-		var asmVerPattern = @"(\[assembly: [\w\.]*Version\("")(?<asmVer>[\d+\.\d+]*)(""\)\])";
-        var match = Regex.Match(AssemblyFileData, asmVerPattern);
-        var gAsmVer = match.Groups["asmVer"].Value;
-        var oldVersion = new Version(gAsmVer);
+		string AssemblyFileData = File.ReadAllText(AssemblyFilePath);
+		string asmVerPattern = @"\[assembly:[a-z\s]+version\(\""([0-9\.]+)\""\)]";
+		Match match = Regex.Match(AssemblyFileData, asmVerPattern, RegexOptions.IgnoreCase);
+		string gAsmVer = match.Groups[1].Value;
+		Version oldVersion = new Version(gAsmVer);
 
-        // Compile new version  [major.minor.build] = 2.4.99
-        if (oldVersion.Build >= 99)
-        {
-            newVersion = oldVersion.Minor >= 99 
-                ? new Version(oldVersion.Major + 1, 0, 0).ToString()
-                : new Version(oldVersion.Major, oldVersion.Minor + 1, 0).ToString();
-        }
-        else
-        {
-            newVersion = new Version(oldVersion.Major, oldVersion.Minor, oldVersion.Build + 1).ToString();
-        }
-        // 
-        // Set new version in target files
-        AssemblyFileData = Regex.Replace(AssemblyFileData, asmVerPattern, m => m.Groups[1].Value + newVersion + m.Groups[2].Value);
-        File.WriteAllText(AssemblyFilePath, AssemblyFileData);
+		int major = oldVersion.Major;
+		int minor = oldVersion.Minor;
+		int build = oldVersion.Build;
+		int revision = oldVersion.Revision;
+
+		revision += 1;
+		if (revision > 99)
+		{
+		  revision = 0;
+		  build += 1;
+		}
+		if (build > 99)
+		{
+		  build = 0;
+		  minor += 1;
+		}
+		if (minor > 99)
+		{
+		  minor = 0;
+		  major += 1;
+		}
+
+		AssemblyFileData = Regex.Replace(AssemblyFileData, gAsmVer, string.Format("{0}.{1}.{2}.{3}", major, minor,build,revision), RegexOptions.IgnoreCase);
+      File.WriteAllText(AssemblyFilePath, AssemblyFileData);
 	}
 	//========================================== Assembly File ==================================================
 	//===========================================================================================================
